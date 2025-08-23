@@ -1,0 +1,13 @@
+# .husky/pre-commit
+
+# Run lint-staged (automatically applies eslint & prettier to staged files)
+
+# npx lint-staged
+
+# Apply Prettier manually to all changed files in the index (for non-staged changes)
+
+# prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown
+
+# Ensure changes are re-staged after formatting
+
+git update-index --again

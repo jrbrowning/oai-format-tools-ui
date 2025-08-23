@@ -1,0 +1,125 @@
+{
+  "name": "oai-format-tools-ui",
+  "version": "1.0.0",
+  "description": "A modern React dashboard for visualizing GitHub contributions with analytics (charts/sankey) and developer-friendly tools",
+  "main": "main.tsx",
+  "homepage": "https://github.com/jrbrowning/oai-format-tools-ui",
+  "private": true,
+  "type": "module",
+  "keywords": [
+    "github",
+    "dashboard",
+    "analytics",
+    "react",
+    "vite",
+    "tailwindcss",
+    "typescript",
+    "developer-tools",
+    "openai",
+    "ollama"
+  ],
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.md": "prettier --write"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier --write .",
+    "prepare": "husky install",
+    "clean": "rm -rf node_modules; rm -rf package-lock.json; rm -rf pnpm-lock.yaml",
+    "rebuild": "npm run clean && npm install",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "commit": "cz",
+    "gh-page-build": "npm run build",
+    "gh-page-preview": "serve docs --single"
+  },
+  "author": "Jeff Browning <jeff+oaiui@craftcoded.com>",
+  "license": "MIT",
+  "engines": {
+    "node": "20.19.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jrbrowning/oai-format-tools-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jrbrowning/oai-format-tools-ui/issues"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/eslintrc": "^3.3.1",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.1.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/parser": "^8.35.1",
+    "@vitejs/plugin-react": "^4.6.0",
+    "autoprefixer": "^10.4.21",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "dotenv": "^17.0.1",
+    "eslint": "^9.30.1",
+    "eslint-config-prettier": "^10.1.5",
+    "gh-pages": "^6.2.0",
+    "html-validate": "^9.7.1",
+    "husky": "^9.1.7",
+    "jest": "^30.0.3",
+    "nanoid": "^5.1.5",
+    "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.13",
+    "serve": "^14.2.4",
+    "tailwind-merge": "^3.3.1",
+    "tailwind-variants": "^1.0.0",
+    "tailwindcss": "^4.1.11",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.8.3",
+    "uuid": "^11.1.0",
+    "vite": "^7.0.0"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
+    "@radix-ui/react-accordion": "^1.2.11",
+    "@radix-ui/react-dropdown-menu": "^2.1.15",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-scroll-area": "^1.2.9",
+    "@radix-ui/react-select": "^2.2.5",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-switch": "^1.2.5",
+    "@radix-ui/react-tabs": "^1.1.12",
+    "@tailwindcss/vite": "^4.1.11",
+    "axios": "^1.11.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.525.0",
+    "openai": "^5.11.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.61.1",
+    "react-markdown": "^10.1.0",
+    "react-syntax-highlighter": "^15.6.1",
+    "rehype-highlight": "^7.0.2",
+    "remark-gfm": "^4.0.1",
+    "zod": "^3.25.76",
+    "zustand": "^5.0.7"
+  }
+}
