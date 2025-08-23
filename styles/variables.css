@@ -1,0 +1,190 @@
+/* variables.css */
+
+:root {
+  --background: 210 20% 98%;
+  --foreground: 215 25% 27%;
+  --primary: 210 15% 92%;
+  --primary-foreground: 215 25% 27%;
+  --secondary: 210 12% 96%;
+  --secondary-foreground: 215 20% 35%;
+  --active: 210 18% 94%;
+  --accent: 210 15% 90%;
+  --accent-hover: 210 20% 85%;
+  --accent-foreground: 215 25% 27%;
+  --destructive: 0 65% 88%;
+  --destructive-foreground: 0 70% 25%;
+  --destructive-hover: 0 70% 82%;
+  --muted: 210 10% 94%;
+  --muted-foreground: 215 15% 45%;
+  --card: 210 25% 97%;
+  --card-foreground: 215 25% 27%;
+  --popover: 210 30% 99%;
+  --popover-foreground: 215 25% 27%;
+  --border: 210 15% 85%;
+  --input: 210 20% 96%;
+  --ring: 210 25% 80%;
+
+  --chart-wrapper: 210 20% 98%;
+  --chart-bounds: 210 12% 96%;
+  --chart-system: 210 15% 92%;
+  --chart-user: 210 18% 94%;
+  --chart-tool: 210 10% 94%;
+  --chart-assistant: 210 15% 90%;
+  --chart-foreground: 215 25% 27%;
+
+  --summary-border: 210 15% 85%;
+  --summary-wrapper: 210 20% 98%;
+  --summary-bounds: 210 12% 96%;
+  --summary-system: 210 15% 92%;
+  --summary-user: 210 18% 94%;
+  --summary-tool: 210 10% 94%;
+  --summary-assistant: 210 15% 90%;
+  --summary-foreground: 215 25% 27%;
+
+  --prose-headings: 215 30% 25%;
+  --prose-body: 215 25% 27%;
+  --prose-links: 215 35% 35%;
+  --prose-bold: 215 30% 25%;
+  --prose-pre-bg: 210 15% 92%;
+  --prose-pre-color: 215 25% 27%;
+  --prose-pre-border: 210 15% 85%;
+}
+
+.dark {
+  --background: 215 25% 8%;
+  --foreground: 210 15% 85%;
+  --primary: 215 20% 15%;
+  --primary-foreground: 210 15% 85%;
+  --secondary: 215 18% 12%;
+  --secondary-foreground: 210 12% 75%;
+  --active: 215 25% 18%;
+  --accent: 215 20% 16%;
+  --accent-hover: 215 25% 22%;
+  --accent-foreground: 210 15% 85%;
+  --destructive: 0 60% 25%;
+  --destructive-foreground: 0 50% 85%;
+  --destructive-hover: 0 65% 30%;
+  --muted: 215 15% 12%;
+  --muted-foreground: 210 10% 65%;
+  --card: 215 22% 10%;
+  --card-foreground: 210 15% 85%;
+  --popover: 215 25% 9%;
+  --popover-foreground: 210 15% 85%;
+  --border: 215 20% 25%;
+  --input: 215 18% 14%;
+  --ring: 210 50% 50%;
+
+  --chart-wrapper: 215 25% 8%;
+  --chart-bounds: 215 18% 12%;
+  --chart-system: 215 20% 15%;
+  --chart-user: 215 25% 18%;
+  --chart-tool: 215 15% 14%;
+  --chart-assistant: 215 20% 16%;
+  --chart-foreground: 210 15% 85%;
+
+  --summary-border: 215 20% 25%;
+  --summary-wrapper: 215 25% 8%;
+  --summary-bounds: 215 18% 12%;
+  --summary-system: 215 20% 15%;
+  --summary-user: 215 25% 18%;
+  --summary-tool: 215 15% 14%;
+  --summary-assistant: 215 20% 16%;
+  --summary-foreground: 210 15% 85%;
+
+  --prose-headings: 210 20% 90%;
+  --prose-body: 210 15% 85%;
+  --prose-links: 210 30% 75%;
+  --prose-bold: 210 20% 90%;
+  --prose-pre-bg: 215 20% 15%;
+  --prose-pre-color: 210 15% 85%;
+  --prose-pre-border: 215 20% 25%;
+}
+
+/* Tailwind color utility classes via CSS vars */
+@layer utilities {
+  .bg-background {
+    background-color: hsl(var(--background));
+  }
+  .text-foreground {
+    color: hsl(var(--foreground));
+  }
+  .bg-primary {
+    background-color: hsl(var(--primary));
+  }
+  .text-primary-foreground {
+    color: hsl(var(--primary-foreground));
+  }
+  .bg-secondary {
+    background-color: hsl(var(--secondary));
+  }
+  .text-secondary-foreground {
+    color: hsl(var(--secondary-foreground));
+  }
+  .bg-accent {
+    background-color: hsl(var(--accent));
+  }
+  .hover\:bg-accent-hover:hover {
+    background-color: hsl(var(--accent-hover));
+  }
+  .text-accent-foreground {
+    color: hsl(var(--accent-foreground));
+  }
+  .bg-destructive {
+    background-color: hsl(var(--destructive));
+  }
+  .hover\:bg-destructive-hover:hover {
+    background-color: hsl(var(--destructive-hover));
+  }
+  .text-destructive-foreground {
+    color: hsl(var(--destructive-foreground));
+  }
+  .bg-muted {
+    background-color: hsl(var(--muted));
+  }
+  .text-muted-foreground {
+    color: hsl(var(--muted-foreground));
+  }
+  .bg-card {
+    background-color: hsl(var(--card));
+  }
+  .text-card-foreground {
+    color: hsl(var(--card-foreground));
+  }
+  .bg-popover {
+    background-color: hsl(var(--popover));
+  }
+  .text-popover-foreground {
+    color: hsl(var(--popover-foreground));
+  }
+  .border-border {
+    border-color: hsl(var(--border));
+  }
+  .bg-input {
+    background-color: hsl(var(--input));
+  }
+  .ring-ring {
+    --tw-ring-color: hsl(var(--ring));
+  }
+  .bg-active {
+    background-color: hsl(var(--active));
+  }
+
+  /* Prose */
+  .prose-headings {
+    color: hsl(var(--prose-headings));
+  }
+  .prose-body {
+    color: hsl(var(--prose-body));
+  }
+  .prose-links {
+    color: hsl(var(--prose-links));
+  }
+  .prose-bold {
+    color: hsl(var(--prose-bold));
+  }
+  .prose-pre {
+    background-color: hsl(var(--prose-pre-bg));
+    color: hsl(var(--prose-pre-color));
+    border-color: hsl(var(--prose-pre-border));
+  }
+}
