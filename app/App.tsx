@@ -3,30 +3,11 @@
 import { LLMRequestForm } from "@/components/forms/LLMRequestsForm";
 import { ModeToggle } from "@/components/mode-toggle";
 import { ThemeProvider } from "@/components/theme-provider";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useRootStore } from "@/zustand/rootStore";
-import { selectStages } from "@/zustand/selectors/stageSelectors";
+
 import { useState } from "react";
-import { CompletionViewer } from "./CompletionViewer";
-import { StreamingViewer } from "./StreamingViewer";
 export default function App() {
   const [tab, setTab] = useState("inputs");
-
-  // Use the selectStages selector to get all stages
-  const stages = useRootStore(selectStages);
-
-  // Zustand setter for active stage
-  const setActiveStageId = useRootStore((state) => state.setActiveStageId);
-
-  // Current active stageId
-  const activeStageId = useRootStore((state) => state.activeStageId);
 
   const triggerClass =
     "text-xs sm:text-sm px-3 py-1.5 rounded-md border border-transparent data-[state=active]:border-border data-[state=active]:bg-muted data-[state=active]:text-blue-600 dark:data-[state=active]:text-blue-400 data-[state=active]:font-semibold transition-colors";
@@ -82,40 +63,14 @@ export default function App() {
                 <label className="text-xs text-muted-foreground pl-1">
                   ToolChain Stages
                 </label>
-                <Select value={activeStageId} onValueChange={setActiveStageId}>
-                  <SelectTrigger
-                    className="w-full sm:w-[220px]"
-                    aria-label="Stage"
-                    title="ToolChain Stages"
-                  >
-                    <SelectValue placeholder="stages" />
-                  </SelectTrigger>
-                  <SelectContent className="backdrop-blur-lg border border-border shadow-md rounded-md px-2 py-2.5 text-sm space-y-1 animate-in fade-in duration-200 data-[state=closed]:animate-out data-[state=closed]:fade-out">
-                    {Object.values(stages).length === 0 ? (
-                      <SelectItem disabled value="">
-                        No stages
-                      </SelectItem>
-                    ) : (
-                      Object.values(stages).map((stage) => (
-                        <SelectItem key={stage.stage_id} value={stage.stage_id}>
-                          {stage.stage_id}
-                        </SelectItem>
-                      ))
-                    )}
-                  </SelectContent>
-                </Select>
               </div>
             </div>
 
             <TabsContent value="inputs">
               <LLMRequestForm setTab={setTab} />
             </TabsContent>
-            <TabsContent value="streaming">
-              <StreamingViewer />
-            </TabsContent>
-            <TabsContent value="completion">
-              <CompletionViewer />
-            </TabsContent>
+            <TabsContent value="streaming"></TabsContent>
+            <TabsContent value="completion"></TabsContent>
           </Tabs>
         </div>
       </div>
