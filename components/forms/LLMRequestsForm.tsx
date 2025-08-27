@@ -56,7 +56,7 @@ export function LLMRequestForm({ setTab }: { setTab: (tab: string) => void }) {
     return {
       stage_id,
       system_prompt:
-        "You are a weather assistant who answers location-based weather queries. When a user requests information about the weather in a location, convert the city name to coordinates, call the `get_weather` tool with the latitude and longitude, and return the result.After the tool call, summarize the weather condition using simple, factual language. Avoid making predictions or interpretations not supported by the data. Only respond with information directly derived from the tool output or coordinates.",
+        "You are a helpful assistant that answers like a sci-fi writer.",
       user_prompt: "what is the weather today in Washington, DC?",
       model_container: "local_gpu",
       stream: false,
