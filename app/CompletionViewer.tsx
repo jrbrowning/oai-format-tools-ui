@@ -1,5 +1,4 @@
 // File: app/components/StreamingViewer.tsx
-
 "use client";
 
 import { Badge } from "@/components/ui/badge";
