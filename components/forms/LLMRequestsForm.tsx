@@ -2,6 +2,12 @@
 
 "use client";
 
+import {
+  dispatchToolChainCompletion,
+  dispatchToolChainStreaming,
+} from "@/lib/toolchainDispatcher";
+import { useRootStore } from "@/zustand/rootStore";
+
 import { TupleInputField } from "@/components/forms/TupleInputField";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -16,9 +22,12 @@ import {
 import { Switch } from "@/components/ui/switch";
 import type { ModelKey } from "@/lib/constants";
 import { modelOptions } from "@/lib/constants";
+import type { LLMRequest } from "@/types/llmRequest";
 import { Strategy } from "@/types/llmRequest";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 
 // --- Zod Schema ---
@@ -35,12 +44,19 @@ const schema = z.object({
 });
 
 export function LLMRequestForm({ setTab }: { setTab: (tab: string) => void }) {
-  const currentRequest = undefined; // TODO: fetch current LLMRequest from state or props);
+  const activeStageId = useRootStore((s) => s.activeStageId);
+  const currentRequest = useRootStore((s) => s.llmRequests[activeStageId]);
+  const addStage = useRootStore((s) => s.addStage);
+  const removeStage = useRootStore((s) => s.removeStage);
+  const setLLMRequest = useRootStore((s) => s.setLLMRequest);
+  const removeLLMRequest = useRootStore((s) => s.removeLLMRequest);
+  const stageCount = useRootStore((s) => Object.keys(s.stages).length);
 
   function getDefaultLLMRequest(stage_id: string): z.infer<typeof schema> {
     return {
       stage_id,
-      system_prompt: "Answer as a scientific research assistant",
+      system_prompt:
+        "You are a helpful assistant that answers like a sci-fi writer.",
       user_prompt: "what is the weather today in Washington, DC?",
       model_container: "traditional",
       stream: false,
@@ -53,19 +69,79 @@ export function LLMRequestForm({ setTab }: { setTab: (tab: string) => void }) {
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
-    defaultValues: currentRequest ?? getDefaultLLMRequest(""),
+    defaultValues: currentRequest ?? getDefaultLLMRequest(activeStageId),
     values: currentRequest,
   });
 
+  const formState = form.formState;
+  const isValid = formState.isValid;
+
   const watchedValues = useWatch({ control: form.control });
 
+  useEffect(() => {
+    if (!watchedValues.stage_id) return;
+    const updated = {
+      ...watchedValues,
+      synthesis: watchedValues.strategy === Strategy.Synthesis,
+    };
+    setLLMRequest(watchedValues.stage_id, updated as LLMRequest);
+  }, [watchedValues]);
+
   const onSubmit = async (values: z.infer<typeof schema>) => {
-    console.log("LLMRequestForm onSubmit: ", values);
+    const currentStageId = useRootStore.getState().activeStageId;
+    const updatedValues: LLMRequest = {
+      ...values,
+      stage_id: currentStageId,
+      synthesis: values.strategy === Strategy.Synthesis,
+    };
+
+    setLLMRequest(values.stage_id, updatedValues);
+    setTab(values.stream ? "streaming" : "completion");
+
+    if (values.stream) {
+      await dispatchToolChainStreaming(values.stage_id);
+    } else {
+      await dispatchToolChainCompletion(values.stage_id);
+    }
+  };
+
+  const handleResetStage = () => {
+    const defaultValues = getDefaultLLMRequest(activeStageId);
+    form.reset(defaultValues);
+    setLLMRequest(activeStageId, defaultValues);
+  };
+
+  const handleAddStage = () => {
+    const newStageId = uuidv4();
+    addStage(newStageId);
+    useRootStore.getState().setActiveStageId(newStageId);
+  };
+
+  const handleRemoveStage = () => {
+    removeStage(activeStageId);
+    useRootStore.getState().setActiveStageId("");
+    removeLLMRequest(activeStageId);
   };
 
   return (
     <Card className="w-full max-w-4xl mx-auto mt-6">
-      <CardHeader className="flex items-center justify-end"></CardHeader>
+      <CardHeader className="flex items-center justify-end">
+        <div className="flex gap-2">
+          <Button variant="secondary" onClick={handleAddStage}>
+            + Add Stage
+          </Button>
+          <Button
+            variant="destructive"
+            disabled={stageCount <= 1}
+            onClick={handleRemoveStage}
+          >
+            - Remove Stage
+          </Button>
+          <Button variant="outline" onClick={handleResetStage}>
+            Reset Stage
+          </Button>
+        </div>
+      </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -179,7 +255,17 @@ export function LLMRequestForm({ setTab }: { setTab: (tab: string) => void }) {
                   )}
                 />
               </div>
-              <Button type="submit">Submit</Button>
+              <Button
+                type="submit"
+                className={`transition-all duration-200 ${
+                  isValid
+                    ? "bg-primary hover:bg-primary/90 ring-2 ring-primary/20 ring-offset-2 shadow-lg scale-105"
+                    : "opacity-50"
+                }`}
+                disabled={!isValid}
+              >
+                Submit
+              </Button>{" "}
             </div>
           </form>
         </Form>
