@@ -42,7 +42,7 @@ export function LLMRequestForm({ setTab }: { setTab: (tab: string) => void }) {
       stage_id,
       system_prompt: "Answer as a scientific research assistant",
       user_prompt: "what is the weather today in Washington, DC?",
-      model_container: "local_gpu",
+      model_container: "traditional",
       stream: false,
       max_tokens: [1024, 1024],
       temperature: [0.0, 0.0],
