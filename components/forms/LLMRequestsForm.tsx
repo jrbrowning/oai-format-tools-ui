@@ -58,7 +58,7 @@ export function LLMRequestForm({ setTab }: { setTab: (tab: string) => void }) {
       system_prompt:
         "You are a helpful assistant that answers like a sci-fi writer.",
       user_prompt: "what is the weather today in Washington, DC?",
-      model_container: "local_gpu",
+      model_container: "traditional",
       stream: false,
       max_tokens: [1024, 1024],
       temperature: [0.0, 0.0],
@@ -72,6 +72,9 @@ export function LLMRequestForm({ setTab }: { setTab: (tab: string) => void }) {
     defaultValues: currentRequest ?? getDefaultLLMRequest(activeStageId),
     values: currentRequest,
   });
+
+  const formState = form.formState;
+  const isValid = formState.isValid;
 
   const watchedValues = useWatch({ control: form.control });
 
@@ -252,7 +255,17 @@ export function LLMRequestForm({ setTab }: { setTab: (tab: string) => void }) {
                   )}
                 />
               </div>
-              <Button type="submit">Submit</Button>
+              <Button
+                type="submit"
+                className={`transition-all duration-200 ${
+                  isValid
+                    ? "bg-primary hover:bg-primary/90 ring-2 ring-primary/20 ring-offset-2 shadow-lg scale-105"
+                    : "opacity-50"
+                }`}
+                disabled={!isValid}
+              >
+                Submit
+              </Button>{" "}
             </div>
           </form>
         </Form>
